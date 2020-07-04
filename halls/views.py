@@ -4,12 +4,21 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from .models import Hall
+from .forms import VideoForm
 # Create your views here.
 
 
 def home(request):
     context = {}
     return render(request, 'halls/home.html', context)
+
+
+def add_videos(request, pk):
+    form = VideoForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'halls/add_video.html', context)
 
 
 def dashboard(request):
@@ -60,4 +69,3 @@ class DeleteHall(DeleteView):
     model = Hall
     template_name = 'halls/delete_hall.html'
     success_url = reverse_lazy('dashboard')
-
