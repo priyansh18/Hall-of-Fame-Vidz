@@ -45,8 +45,8 @@ def add_videos(request, pk):
                 video.save()
                 return redirect('detail_hall', pk)
             else:
-                error = form._errors.setdefault('url', ErrorList())
-                error.append('Needs to be a Youtube Url')
+                errors = form._errors.setdefault('url', ErrorList())
+                print(errors)
 
     context = {
         'form': form,

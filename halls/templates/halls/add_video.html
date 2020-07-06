@@ -1,21 +1,30 @@
-{% extends 'halls/base.html' %}
-{% block content %}
-<h1>Add Video</h1>
+{% extends 'halls/base.html' %} {% block content %}
+<h1>Add Video to {{hall.title}}</h1>
 <form method="POST">
-  {% csrf_token %}
-  {% load widget_tweaks %}
-  {% for field in form %}
+  {% csrf_token %} {% load widget_tweaks %} {% for field in form %}
   <div class="form-group {% if fields.error %}alert alert-danger{% endif %}">
-{{field.errors}}
-{{field.label_tag}}
-{% render_field field class="form-control" %}
+    {{field.errors}} {{field.label_tag}} {% render_field field class="form-control" %}
   </div>
   {% endfor %}
-  <input type="submit" class="btn btn-primary" value="Create Hall">
+  <input type="submit" class="btn btn-primary" value="Add" />
 </form>
 
 <h2>OR</h2>
 <form>
-  {{search_form}}
+  {% for field in search_form %}
+  <div class="form-group">
+    {{field.errors}} {{field.label_tag}} {% render_field field class="form-control" %}
+  </div>
+  {% endfor %}
 </form>
+
+<div id="search_results">
+  <script>
+    var delayTimer;
+    $("#id_search_terms").keyup(function () {
+      clearTimeout(delayTimer);
+      $('#search_results').text('Loading....')
+    });
+  </script>
+</div>
 {% endblock %}
