@@ -9,4 +9,5 @@ urlpatterns = [
     path('halloffame/<int:pk>/update',views.UpdateHall.as_view(), name='update_hall'),
     path('halloffame/<int:pk>/delete',views.DeleteHall.as_view(), name='delete_hall'),
     path('halloffame/<int:pk>/addvideos',views.add_videos, name='add_videos'),
+    path('video/search',views.video_search, name='video_search'),
 ]

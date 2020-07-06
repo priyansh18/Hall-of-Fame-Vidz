@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from .models import Hall, Video
 from .forms import VideoForm, SearchForm
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, JsonResponse
 import urllib
 from django.forms.utils import ErrorList
 import requests
@@ -55,6 +55,13 @@ def add_videos(request, pk):
 
     }
     return render(request, 'halls/add_video.html', context)
+
+
+def video_search(request):
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        return JsonResponse({'hello': search_form.cleaned_data['search_terms']})
+    return JsonResponse({'hello': 'Not Working'})
 
 
 def dashboard(request):
