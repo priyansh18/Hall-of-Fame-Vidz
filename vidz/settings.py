@@ -125,3 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+API_KEY = os.environ.get('YOUTUBE_API_KEY')
