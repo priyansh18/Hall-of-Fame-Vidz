@@ -68,6 +68,11 @@ def video_search(request):
     return JsonResponse({'error': 'Not able to validate form'})
 
 
+class DeleteVideo(DeleteView):
+    model = Video
+    template_name = 'halls/delete_video.html'
+    success_url = reverse_lazy('dashboard')
+
 def dashboard(request):
     context = {}
     return render(request, 'halls/dashboard.html', context)
