@@ -18,35 +18,43 @@
   {% endfor %}
 </form>
 
-<div id="search_results">
-  <script>
-    var delayTimer;
-    $("#id_search_terms").keyup(function () {
-      clearTimeout(delayTimer);
-      $("#search_results").text("Loading....");
-      delayTimer = setTimeout(function () {
-        var text = $("#id_search_terms").val();
-        $.ajax({
-          url: "/video/search",
-          data: {
-            search_terms:text,
-          },
-          dataType: "json",
-          success: function (data) {
-            var results = '';
-            $('#search_results').text('');
-            results+='<div class="row">';
-            data['items'].forEach(function(video){
-              results+='<div class="col-md-4 mt-3"><div class="card mb-4 shadow-sm">';
-                results+='<iframe width="100%" height="205" src="https://www.youtube.com/embed/' + video['id']['videoId'] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-              results+='</div></div>';
-            })
-            results+='</div>';
-            $("#search_results").append(results);
-          },
-        });
-      }, 1000);
-    });
-  </script>
+<div>
+  <div id="search_results" class="row"></div>
 </div>
+
+<script>
+  var delayTimer;
+  $("#id_search_terms").keyup(function () {
+    clearTimeout(delayTimer);
+    $("#search_results").html("<div class='col ml-3'> Loading....<div>");
+    delayTimer = setTimeout(function () {
+      var text = $("#id_search_terms").val();
+      $.ajax({
+        url: "/video/search",
+        data: {
+          search_terms: text,
+        },
+        dataType: "json",
+        success: function (data) {
+          var results = "";
+          $("#search_results").text("");
+
+          const result = data["items"].reduce(function (acc, video) {
+            acc += `
+              <div class="col-md-4 mt-3">
+                <div class="card mb-4 shadow-sm">
+                  <iframe width="100%" height="205" src="https://www.youtube.com/embed/${video["id"]["videoId"]}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+              `;
+
+              return acc;
+          }, "");
+          $("#search_results").append(result);
+        },
+      });
+    }, 1000);
+  });
+</script>
 {% endblock %}
