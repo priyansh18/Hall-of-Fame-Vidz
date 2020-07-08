@@ -73,8 +73,12 @@ class DeleteVideo(DeleteView):
     template_name = 'halls/delete_video.html'
     success_url = reverse_lazy('dashboard')
 
+
 def dashboard(request):
-    context = {}
+    halls = Hall.objects.filter(user=request.user)
+    context = {
+        'halls': halls,
+    }
     return render(request, 'halls/dashboard.html', context)
 
 
