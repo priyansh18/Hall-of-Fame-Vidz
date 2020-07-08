@@ -1,4 +1,4 @@
-{% extends 'halls/base.html' %} {% block content %}
+{% extends 'halls/base.html' %} {% load crispy_forms_tags %} {% block content %}
 <h1>Add Video to {{hall.title}}</h1>
 <form method="POST" id="submit_video">
   {% csrf_token %} {% load widget_tweaks %} {% for field in form %}

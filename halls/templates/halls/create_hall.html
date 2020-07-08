@@ -1,9 +1,9 @@
-{% extends 'halls/base.html' %}
-{% block content %}
-<h1>Create a Hall of Fame</h1>
-<form method="POST">
-  {% csrf_token %}
-  {{form.as_p}}
-  <input type="submit" class="btn btn-primary" value="Create Hall">
-</form>
+{% extends 'halls/base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="container">
+  <h1>Create a Hall of Fame</h1>
+  <form method="POST" class="">
+    {% csrf_token %} {{form|crispy}}
+    <input type="submit" class="btn btn-primary" value="Create Hall" />
+  </form>
+</div>
 {% endblock %}
