@@ -16,7 +16,13 @@ YOUTUBE_API_KEY = 'AIzaSyDN6etR9-Davwzw1dLsM4-jew8u6nvN_Ww'
 
 
 def home(request):
-    context = {}
+    recent_halls = Hall.objects.all().order_by('id')[:3]
+    popular_halls = [Hall.objects.get(
+        pk=5), Hall.objects.get(pk=3), Hall.objects.get(pk=4)]
+    context = {
+        'recent_halls': recent_halls,
+        'popular_halls': popular_halls
+    }
     return render(request, 'halls/home.html', context)
 
 
