@@ -30,6 +30,14 @@ def home(request):
 
 
 @login_required
+def dashboard(request):
+    halls = Hall.objects.filter(user=request.user)
+    context = {
+        'halls': halls,
+    }
+    return render(request, 'halls/dashboard.html', context)
+
+@login_required
 def add_videos(request, pk):
     form = VideoForm()
     search_form = SearchForm()
@@ -56,7 +64,7 @@ def add_videos(request, pk):
                 return redirect('detail_hall', pk)
             else:
                 errors = form._errors.setdefault('url', ErrorList())
-                print(errors)
+                errors.append("Please Enter valid")
 
     context = {
         'form': form,
@@ -89,15 +97,6 @@ class DeleteVideo(LoginRequiredMixin, DeleteView):
         if not video.hall.user == self.request.user:
             raise Http404
         return video
-
-
-@login_required
-def dashboard(request):
-    halls = Hall.objects.filter(user=request.user)
-    context = {
-        'halls': halls,
-    }
-    return render(request, 'halls/dashboard.html', context)
 
 
 class SignUp(CreateView):
